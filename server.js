@@ -65,7 +65,7 @@ const runSearch = () => {
         case 'Add role':
           addRole();
           break;
-
+        
         case 'Update employee info':
           updateEmployee();
           break;
@@ -81,25 +81,7 @@ const runSearch = () => {
     });
 };
 
-// const artistSearch = () => {
-//   inquirer
-//     .prompt({
-//       name: 'artist',
-//       type: 'input',
-//       message: 'What artist would you like to search for?',
-//     })
-//     .then((answer) => {
-//       const query = 'SELECT position, song, year FROM top5000 WHERE ?';
-//       connection.query(query, { artist: answer.artist }, (err, res) => {
-//         res.forEach(({ position, song, year }) => {
-//           console.log(
-//             `Position: ${position} || Song: ${song} || Year: ${year}`
-//           );
-//         });
-//         runSearch();
-//       });
-//     });
-// };
+
 
 const allEmployeesSearch = () => {
   const query =
@@ -118,6 +100,116 @@ const allDepartmentsSearch = () => {
     runSearch();
   });
 };
+
+const allRolesSearch = () => {
+  const query =
+    'SELECT title, salary, department_id, FROM roles';
+  connection.query(query, (err, res) => {
+    console.log(res);
+    runSearch();
+  });
+};
+
+
+
+const addEmployee = () => {
+  const roleOptions = [];
+  const query = 'SELECT role.id, role.title FROM role';
+  connection.query(query, (err, res) => {
+    if (err) throw err;
+    for (var i = 0; i < res.length; i++) {
+      roleOptions.push({
+        name: res[i].title,
+        value: res[i].id
+      })
+    };
+  })
+
+  inquirer.prompt(
+      {
+        name: 'firstname',
+        type: 'input',
+        message: "What is your Employee's first name?",
+      }, {
+        name: 'lastname',
+        type: 'input',
+        message: "What is your Employee's last name?",
+      }, {
+        name: 'role',
+        type: 'rawlist',
+        message: 'Please selest the role option for Employee.',
+        choices: roleOptions,
+      },
+
+
+    )
+
+    .then((answer) => {
+      const query = `INSERT INTO employee (first_name, last_name, role_id) VALUES ('${answer.firstname}', '${answer.lastname}', '${answer.role}')`
+        connection.query(query, (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            runSearch();
+        });
+    })
+};
+
+
+
+
+
+const addDepartment = () => {
+
+  inquirer.prompt(
+      {
+        name: 'department',
+        type: 'input',
+        message: "What is the name of your department?",
+      }, 
+
+    )
+
+    .then((answer) => {
+      const query = `INSERT INTO department VALUES ('${answer.department}')`
+        connection.query(query, (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            runSearch();
+        });
+    })
+};
+
+
+
+const addRole = () => {
+
+  inquirer.prompt([
+    {
+        name: 'title',
+        type: 'input',
+        message: 'Please enter the title of role',
+    },
+    {
+        name: 'salary',
+        type: 'input',
+        message: 'Please enter salary for role',
+    },
+    {
+        name: 'roleID',
+        type: 'input',
+        message: 'Enter role ID',
+    }
+]).then((answer) => {
+    const query = `INSERT INTO role (title, salary, role_id) VALUES ('${answer.title}', '${answer.salary},' '${answer.roleID}')`
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        runSearch();
+    });
+})
+};
+
+
 
 // const rangeSearch = () => {
 //   inquirer
