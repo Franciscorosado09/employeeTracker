@@ -251,46 +251,44 @@ const addRole = () => {
 
 const updateEmployee = () => {
 
-  const query = 'SELECT first_name, last_name, role_id, manager_id FROM employee';
+  const query = 'SELECT id, first_name, last_name, role_id, manager_id FROM employee';
   connection.query(query, (err, res) => {
     if (err) throw err;
-    
-    }),
-  
-  inquirer
-    .prompt([
-      
-    
-      {
-        name: "updateEmployee",
-        type: "input",
-        message: "Please input the Employee's ID you want to update.",
-      },
-      {
-        name: "newRoleID",
-        type: "input",
-        message: "Please input Employee's new role ID.",
-        
-      },
-     
-    ])
-    .then((answer) => {
-      const query = `UPDATE employee SET role_id = '${answer.newRoleID}', WHERE id = '${answer.updateEmployee}'`;
 
-      connection.query(query, (err, res) => {
-        if (err) throw err;
-        console.log(" ")
-        console.log(" ")
-        console.log(chalk.magenta.underline("You've updated employees information - Four for your Glen Coco! You go, Glen Coco! "))
-        console.log(" ")
-        console.log(" ")
-
-        runSearch();
-      });
-    })
+    inquirer
+      .prompt([
 
 
+        {
+          name: "updateEmployee",
+          type: "input",
+          message: "Please input the Employee's ID you want to update.",
+        },
+        {
+          name: "newRoleID",
+          type: "input",
+          message: "Please input Employee's new role ID.",
 
+        },
+
+      ])
+      .then((answer) => {
+        const query = `UPDATE employee SET role_id = '${answer.newRoleID}', WHERE id = '${answer.updateEmployee}'`;
+
+        connection.query(query, (err, res) => {
+          if (err) throw err;
+          console.log(" ")
+          console.log(" ")
+          console.log(chalk.magenta.underline("You've updated employees information - Four for your Glen Coco! You go, Glen Coco! "))
+          console.log(" ")
+          console.log(" ")
+
+          runSearch();
+        });
+      })
+
+
+  })
 };
 
 
