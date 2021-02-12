@@ -85,9 +85,6 @@ const runSearch = () => {
           updateEmployee();
           break;
 
-          // case 'bonus':
-          //   songAndAlbumSearch();
-          //   break;
 
         case 'Exit':
           exitApp();

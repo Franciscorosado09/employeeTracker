@@ -27,7 +27,7 @@ Build a command-line application that at a minimum allows the user to:
 
 link to github: https://github.com/Franciscorosado09/employeeTracker
 
-Link to video: 
+Link to video: https://drive.google.com/file/d/1cLcomfjCdj221YQreu3k5kI8AXUHXHhc/view?usp=sharing
 
 
 
