@@ -249,102 +249,62 @@ const addRole = () => {
 };
 
 
-// const updateEmployee = () => {
+
+
+
+
+const updateEmployee = () => {
+
+  const roleOptions = [];
+  const query = 'SELECT roles.id, roles.title FROM roles';
+  connection.query(query, (err, res) => {
+    
+    if (err) throw err;
+    for (var i = 0; i < res.length; i++) {
+      roleOptions.push({
+        name: res[i].title,
+        value: res[i].id
+      })
+    };
+  })
+  
+  inquirer
+    .prompt([
+
+
+      {
+        name: "updateEmployee",
+        type: "input",
+        message: "Please input the Employee's ID you want to update.",
+      },
+      {
+        name: "newRoleID",
+        type: "rawlist",
+        choices: roleOptions,
+
+      },
+
+    ])
+    .then((answer) => {
+
+      
+      const query= `UPDATE employee SET role_id = '${answer.newRoleID}' WHERE id = '${answer.updateEmployee}'`;
+
+      connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.log(" ")
+        console.log(" ")
+        console.log(chalk.magenta.underline("You've updated employees information - Four for your Glen Coco! You go, Glen Coco! "))
+        console.log(" ")
+        console.log(" ")
+
+        runSearch();
+      });
+    })
 
   
 
-//   const query = 'SELECT id, first_name, last_name, role_id, manager_id FROM employee';
-//   connection.query(query, (err, res) => {
-//     if (err) throw err;
-
-//     inquirer
-//       .prompt([
-
-
-//         {
-//           name: "updateEmployee",
-//           type: "input",
-//           message: "Please input the Employee's ID you want to update.",
-//         },
-//         {
-//           name: "newRoleID",
-//           type: "input",
-//           message: "Please input Employee's new role ID.",
-
-//         },
-
-//       ])
-//       .then((answer) => {
-//         const query = `UPDATE employee SET role_id = '${answer.newRoleID}', WHERE id = '${answer.updateEmployee}'`;
-
-//         connection.query(query, (err, res) => {
-//           if (err) throw err;
-//           console.log(" ")
-//           console.log(" ")
-//           console.log(chalk.magenta.underline("You've updated employees information - Four for your Glen Coco! You go, Glen Coco! "))
-//           console.log(" ")
-//           console.log(" ")
-
-//           runSearch();
-//         });
-//       })
-
-
-//   })
-// };
-
-
-
-
-// const updateEmployee = () => {
-
-//   const roleOptions = [];
-//   const query = 'SELECT roles.id, roles.title FROM roles';
-//   connection.query(query, (err, res) => {
-//     if (err) throw err;
-//     for (var i = 0; i < res.length; i++) {
-//       roleOptions.push({
-//         name: res[i].title,
-//         value: res[i].id
-//       })
-//     };
-//   })
-  
-//   inquirer
-//     .prompt([
-
-
-//       {
-//         name: "updateEmployee",
-//         type: "input",
-//         message: "Please input the Employee's ID you want to update.",
-//       },
-//       {
-//         name: "newRoleID",
-//         type: "input",
-//         choices: roleOptions,
-
-//       },
-
-//     ])
-//     .then((answer) => {
-//       const query = `UPDATE employee SET role_id = '${answer.newRoleID}', WHERE id = '${answer.updateEmployee}'`;
-
-//       connection.query(query, (err, res) => {
-//         if (err) throw err;
-//         console.log(" ")
-//         console.log(" ")
-//         console.log(chalk.magenta.underline("You've updated employees information - Four for your Glen Coco! You go, Glen Coco! "))
-//         console.log(" ")
-//         console.log(" ")
-
-//         runSearch();
-//       });
-//     })
-
-  
-
-// };
+};
 
 
 
